@@ -6,3 +6,6 @@ node_modules
 
 #common_info
 common_info.docx
+
+#config with token from @botFather
+config.js

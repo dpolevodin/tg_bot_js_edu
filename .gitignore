@@ -1,0 +1,8 @@
+# idea
+.idea
+
+#node_modules
+node_modules
+
+#common_info
+common_info.docx

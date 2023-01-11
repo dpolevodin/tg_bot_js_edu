@@ -12,7 +12,7 @@ bot.onText(/напомни (.+) в (.+)/, function (msg, match) {
 
     notes.push({ 'uid': userId, 'time': time, 'text': text });
 
-    bot.sendMessage(userId, 'Отлично! Я обязательно напомню, если не сдохну :)');
+    bot.sendMessage(userId, 'Отлично! Я обязательно напомню!');
 });
 
 setInterval(function(){

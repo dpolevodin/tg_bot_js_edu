@@ -3,24 +3,24 @@ const { TOKEN } = require('./config')
 
 const bot = new TelegramBot(TOKEN, {polling: true});
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-    // 'msg' is the received Message from Telegram
-    // 'match' is the result of executing the regexp above on the text content
-    // of the message
+var notes = [];
 
-    const chatId = msg.chat.id;
-    const resp = match[1]; // the captured "whatever"
+bot.onText(/напомни (.+) в (.+)/, function (msg, match) {
+    var userId = msg.from.id;
+    var text = match[1];
+    var time = match[2];
 
-    // send back the matched "whatever" to the chat
-    bot.sendMessage(chatId, resp);
+    notes.push({ 'uid': userId, 'time': time, 'text': text });
+
+    bot.sendMessage(userId, 'Отлично! Я обязательно напомню, если не сдохну :)');
 });
 
-// Listen for any kind of message. There are different kinds of
-// messages
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
-
-    // send a message to the chat acknowledging receipt of their message
-    bot.sendMessage(chatId, 'Received your message');
-});
+setInterval(function(){
+    for (var i = 0; i < notes.length; i++) {
+        const curDate = new Date().getHours() + ':' + new Date().getMinutes();
+        if (notes[i]['time'] === curDate) {
+            bot.sendMessage(notes[i]['uid'], 'Напоминаю, что вы должны: '+ notes[i]['text'] + ' сейчас.');
+            notes.splice(i, 1);
+        }
+    }
+}, 1000);

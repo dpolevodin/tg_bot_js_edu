@@ -1,6 +1,8 @@
 const TelegramBot = require('node-telegram-bot-api');
 const { TOKEN } = require('./config')
 
+const ImageUrl = 'https://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-2.png';
+
 const bot = new TelegramBot(TOKEN, {polling: true});
 
 var notes = [];
@@ -13,6 +15,7 @@ bot.onText(/напомни (.+) в (.+)/, function (msg, match) {
     notes.push({ 'uid': userId, 'time': time, 'text': text });
 
     bot.sendMessage(userId, 'Отлично! Я обязательно напомню!');
+    bot.sendPhoto(userId, ImageUrl)
 });
 
 setInterval(function(){

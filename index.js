@@ -5,26 +5,40 @@ const ImageUrl = 'https://avatars.mds.yandex.net/i?id=cfcc5522261057c3064dc06ebb
 
 const bot = new TelegramBot(TOKEN, {polling: true});
 
-const keyboard = [
-    [
-        {
-            text: 'Тюменская слобода', // текст на кнопке
-            callback_data: 'sloboda' // данные для обработчика событий
-        }
-    ],
-    [
-        {
-            text: 'ДОК',
-            callback_data: 'dok'
-        }
-    ],
-    [
-        {
-            text: 'Ново-Патрушева',
-            callback_data: 'patrushevo' //внешняя ссылка
-        }
-    ]
-];
+const mainMenuEnum = {
+    sloboda: 'Тюменская слобода',
+    dok: 'ДОК',
+    patrushevo: 'Ново-Патрушево'
+}
+
+const mainMenuKeyboardConfig = [mainMenuEnum.sloboda, mainMenuEnum.dok, mainMenuEnum.patrushevo]
+
+const keyboard = mainMenuKeyboardConfig.map(item => ([{
+    text: item,
+    callback_data: item
+    }])
+)
+
+//     [
+//     [
+//         {
+//             text: 'Тюменская слобода', // текст на кнопке
+//             callback_data: 'sloboda' // данные для обработчика событий
+//         }
+//     ],
+//     [
+//         {
+//             text: 'ДОК',
+//             callback_data: 'dok'
+//         }
+//     ],
+//     [
+//         {
+//             text: 'Ново-Патрушева',
+//             callback_data: 'patrushevo' //внешняя ссылка
+//         }
+//     ]
+// ];
 
 
 const keyboard2 = [
@@ -66,15 +80,15 @@ bot.on('callback_query', (query) => {
 
     let img = '';
 
-    if (query.data === 'sloboda') { // если кот
+    if (query.data === mainMenuEnum.sloboda) {
         img = ImageUrl
     }
 
-    if (query.data === 'dok') { // если пёс
+    if (query.data === mainMenuEnum.dok) {
         img = ImageUrl
     }
 
-    if (query.data === 'patrushevo') { // если пёс
+    if (query.data === mainMenuEnum.patrushevo) {
         img = ImageUrl
     }
 
